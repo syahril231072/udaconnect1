@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: kafka-broker
+  name: kafka-broker
+spec:
+  ports:
+  - name: "9092"
+    port: 9092
+    targetPort: 9092
+    nodePort: 30092
+  selector:
+    service: kafka-broker
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: kafka-broker
+  name: kafka-broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: kafka-broker
+  template:
+    metadata:
+      labels:
+        service: kafka-broker
+    spec:
+      containers:
+      - image: spotify/kafka
+        name: kafka-broker
+        imagePullPolicy: Always
+        env:
+        - name: ADVERTISED_HOST
+          value: "kafka"
+        - name: ADVERTISED_PORT
+          value: "9092"
+      restartPolicy: Always

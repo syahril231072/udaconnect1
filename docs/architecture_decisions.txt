@@ -1,0 +1,28 @@
+The architecture decision was to split the monolithic into 3 different microservices. The 3 Services are Person-API, Location-API, and Connection-API.
+The Person-API contains Person Service and Person Route. The person route contains a retrieve all for persons in the database, a create for person to add them to the database, and retrieve a person of a unique ID.
+The Connection-API contains Connection Service and Connection route. The connection route retrieves the contacts that a person has made based on the distance from a person.
+The Location-API contains Location Service and Location route. The location route retrieves the locations based on values provided
+These 3 microservices make up the base application, to handle the data there are two more microservices, Kafka and grpc.
+Front end needs to call all 3 microservices individually. The reason to make microservices:
+•	Services are encouraged to be small, ideally built by a handful of developers.
+•	Services can be consumed and reused by other services and applications without direct coupling through language bindings or shared libraries.
+•	Services exist as independent deployment artifacts and can be scaled independently of other services.
+•	Services that are developed discretely enable developers to use the appropriate development framework for the task at hand.
+Kafka and grpc handle the POST messages that are performed by the application. When a POST message is sent from the Person Microservice or Location Microservice to person or location, the messages are then sent to kafka and kafka sends them to GRPC.
+After going to GRPC, the new data is then added to the database and should appear on the application if the data was added correctly.
+Why Kafka?
+Messaging systems helps for data interaction between multiple system Asynchronously 
+Inspite of Acheiving Asynchronous mechanism using Kafka here.
+Additionally kafka is distributed messaging queue & possess fault tolerance mechanism.
+Kafka is best suited for communication between microservices in Asynchronous fashion.
+Kafka Producer : Present inside the microservices which pushes data to broker
+Kafka Broker : Running as seperate docker instance
+Kafka Consumer : Running as separate docker instance
+Why GRPC?
+GRPC helps for connecting services across the multiple platform.
+Uses protobuff which is so light weight.
+Kafka Consumer pushes reads data from broker & make a push to GRPC.
+GRPC takes care of persisting data into DB.
+GRPRC Server : Server.py contains code for persisting data into Postgres DB.
+GRPC Client : client.py that is for my unit testing to invoke GRPC server
+With the changes above, the application should be able to scale with a decent amount of users.

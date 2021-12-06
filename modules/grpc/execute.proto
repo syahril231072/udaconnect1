@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message Person {
+    string first_name = 1;
+	string last_name = 2;
+	string company_name = 3;
+}
+
+message Location {
+    int32  person_id = 1;
+	string creation_time = 2;
+	string latitude = 3;
+	string longitude = 4;
+}
+
+message Status {
+	bool status = 1;
+}
+
+service Invoke {
+
+    rpc create_person(Person) returns (Status);
+	rpc create_location(Location) returns (Status) ;
+}
+

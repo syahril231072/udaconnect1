@@ -1,0 +1,10 @@
+There is a python client available (grpc/client.py) will send request to location event producer service through Protobuf message use gRPC for efficiently transporting structured data as the following location_event.proto. 
+
+message LocationEventMessage {
+  int32 userId = 1;
+  int32 latitude = 2;
+  int32 longitude = 3;
+}
+
+service ItemService {
+  rpc Create(LocationEventMessage) returns (LocationEventMessage);

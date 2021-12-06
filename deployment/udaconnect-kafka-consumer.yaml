@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: kafka-consumer
+  name: kafka-consumer
+spec:
+  ports:
+  - name: "9092"
+    port: 9092
+    targetPort: 9092
+    nodePort: 31111
+  selector:
+    service: kafka-consumer
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: kafka-consumer
+  name: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: kafka-consumer
+  template:
+    metadata:
+      labels:
+        service: kafka-consumer
+    spec:
+      containers:
+      - image: spotify/kafka
+        name: kafka-listener
+        imagePullPolicy: Always
+      restartPolicy: Always

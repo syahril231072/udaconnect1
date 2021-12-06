@@ -1,0 +1,85 @@
+{
+	"variables": [],
+	"info": {
+		"name": "udaconnect",
+		"_postman_id": "72d9d661-1210-483c-9277-6dd4839661dd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:30001/api/persons",
+			"request": {
+				"url": "http://localhost:30001/api/persons",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"filterCondition\": \"columnName='value' AND columnName='value'\",\n  \"limit\": 5,\n  \"plainTextQueries\": \"select * from cust_acct limit 5\",\n  \"requireLLAP\": false\n}\n\n\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:30001/api/persons",
+			"request": {
+				"url": {
+					"raw": "http://localhost:30003/api/persons/5/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30003",
+					"path": [
+						"api",
+						"persons",
+						"5",
+						"connection"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2021-01-01",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "end_date",
+							"value": "2021-12-30",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "distance",
+							"value": "5",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"filterCondition\": \"columnName='value' AND columnName='value'\",\n  \"limit\": 5,\n  \"plainTextQueries\": \"select * from cust_acct limit 5\",\n  \"requireLLAP\": false\n}\n\n\n"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
